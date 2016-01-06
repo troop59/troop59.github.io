@@ -1,0 +1,54 @@
+html
+  font-size: 14pt
+  height: 100%
+  +scrollbar(8px, fade_out($black, 0.5), fade_out($black, 1))
+
+body
+  font-size: 1rem
+  background: $black
+  height: 100%
+  overflow: visible
+  +row(table)
+
+#sidenav
+  height: 100%
+  z-index: 10
+  background: $white
+  position: relative
+  +span-columns(2)
+
+#content
+  height: 100%
+  +span-columns(10)
+  overflow-y: scroll
+  overflow-x: hidden
+  background: rgba(255,255,255,0.5)
+
+  &::before
+    content: ""
+    position: fixed
+    left: 0
+    right: 0
+    z-index: -1
+    display: block
+    background-image: url(/assets/img/background.png)
+    width: 100%
+    height: 100%
+    +filter(blur(5px))
+
+#sidebar-activator
+  +position(fixed, 0 null null 0)
+  margin: 1em
+  z-index: 2000
+  background: darken(gray, 30%)
+
+@media #{$medium-and-down}
+  #sidenav
+    position: static
+    +span-columns(0)
+  #content
+    +fill-parent
+
+@media #{$large-and-up}
+  #sidebar-activator
+    display: none

@@ -1,0 +1,74 @@
+#sidenav
+
+  .faceimg
+    margin:
+      top: 28px
+      left: 18px
+      right: 18px
+      bottom: 14px
+    overflow:hidden
+    height: auto
+    img
+      border-radius: 50%
+      width: 100%
+
+  .title
+
+    *
+      color: $black
+      text-align: center
+      margin: 0 auto
+      width: fit-content
+      width: -moz-fit-content
+    h1
+      padding: .2em
+      font-size: 1.5rem
+      border: .2em black solid
+    h2
+      margin: .5em auto
+      font-size: 1rem
+
+  .links
+    width: 60%
+    +block-center
+
+  ul
+    list-style-type: none
+    margin: 0 auto
+    padding: 0
+    &#nav
+      position: absolute
+      top: 0
+      li a
+        background: $silver
+        &.active-nav
+          background: $gray
+          &:hover
+            box-shadow: 0px 0px 0px .1em $white, 0px 0px 0px .2em $gray
+        &:hover
+          box-shadow: 0px 0px 0px .1em $white, 0px 0px 0px .2em $silver
+    &#slide-out li a.active-nav
+      font-weight: bolder
+    li
+      a
+        margin-bottom: .5em
+        text-align: center
+        border-radius: .25em
+        display: block
+        text-decoration: none
+        color: $black
+        +transition(all 250ms ease-in-out)
+
+    hr
+      height: 0
+      background: none
+      border: 0
+      border-top: 2px solid $gray
+      width: 40%
+      margin: 10px auto
+
+.drag-target
+  display: none
+
+.side-nav
+  height: 100%

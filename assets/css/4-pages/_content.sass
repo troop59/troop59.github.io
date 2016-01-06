@@ -1,0 +1,40 @@
+.card
+  +span-columns(4 of 10)
+  +shift(.5)
+  //+block-center()
+  float: left
+  &.center-card
+    float: none
+    +span-columns(6 of 10)
+    +block-center
+  &, &.center-card
+    @media #{$medium-and-down}
+      float: none
+      +span-columns(8)
+      +block-center
+    @media #{$small-and-down}
+      float: none
+      font-size: 4.5vw
+      +span-columns(10)
+      +block-center
+  .card-reveal
+    overflow: visible
+    div
+      height: 100%
+      position: relative
+      p
+        position: absolute
+        top: 0
+        bottom: 0
+        overflow: auto
+
+  .card-content.link-card
+    padding: 0
+    *
+      width: 100%
+      text-align: center
+      height: 100%
+      padding: .75em 0
+
+  .no-scale
+    font-size: 1rem
