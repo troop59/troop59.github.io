@@ -3,6 +3,7 @@
 
 $ ->
   $(".navlink").click ->
+    $('#sidenav-overlay').trigger('click')
     clicked = $(this)
     $(".active-nav").removeClass("active-nav")
     clicked.addClass("active-nav")
