@@ -14,16 +14,18 @@ $ ->
       card.css("z-index", 50+cardCount-index)
       setTimeout( ->
         card.animate({left: window.innerWidth}, 500, complete= ->
-          card.remove()
-          unless $("#content>.card").length
-            loadAjax.done (data)->
-              $("#content").html(data)
-              $("#content>.card").each (index_new)->
-                $(this).hide()
-                card_new = $(this)
-                setTimeout( ->
-                  card_new.show("slide", direction: "left", 500)
-                , 250*index_new)
+          setTimeout( ->
+            card.remove()
+            unless $("#content>.card").length
+              loadAjax.done (data)->
+                $("#content").html(data)
+                $("#content>.card").each (index_new)->
+                  $(this).hide()
+                  card_new = $(this)
+                  setTimeout( ->
+                    card_new.show("slide", direction: "left", 500)
+                  , 250*index_new)
+          , 50)
         )
-      , 100*index)
+      , 250*index)
   $(".button-collapse").sideNav(menuWidth: 300)
