@@ -6,7 +6,7 @@ $ ->
     clicked = $(this)
     $(".active-nav").removeClass("active-nav")
     clicked.addClass("active-nav")
-    loadAjax = $.ajax("/content/#{ clicked.attr("ajax") || "about" }.html")
+    loadAjax = $.ajax("content/#{ clicked.attr("ajax") || "about" }.html")
     cardCount = $("#content>.card").length
     $("#content>.card").each (index)->
       card = $(this)
