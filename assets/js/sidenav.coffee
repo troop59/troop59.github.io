@@ -2,6 +2,7 @@
 ---
 
 $ ->
+  title = document.title
   $(".navlink").each ->
     $(this).attr("href", "##{$(this).attr("ajax")}")
   if window.location.hash.length > 1
@@ -9,12 +10,16 @@ $ ->
     $("#content").load("content/#{loc}.html")
     $(".active-nav").removeClass("active-nav")
     $(".navlink[ajax=#{loc}]").addClass("active-nav")
+    document.title = "#{$(".active-nav:first").text()} | #{title}"
+    document.title = title if $(".active-nav").attr("ajax") == "about"
   $(".navlink").click ->
     $('#sidenav-overlay').trigger('click')
     return if $(this).hasClass("active-nav")
     clicked = $(this)
     $(".active-nav").removeClass("active-nav")
     clicked.addClass("active-nav")
+    document.title = "#{clicked.text()} | #{title}"
+    document.title = title if clicked.attr("ajax") == "about"
     loadAjax = $.ajax("content/#{ clicked.attr("ajax") || "about" }.html")
     cardCount = $("#content>.card").length
     $("#content>.card").each (index)->
