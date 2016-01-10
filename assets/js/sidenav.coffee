@@ -2,8 +2,16 @@
 ---
 
 $ ->
+  $(".navlink").each ->
+    $(this).attr("href", "##{$(this).attr("ajax")}")
+  if window.location.hash.length > 1
+    loc = window.location.hash.substring(1)
+    $("#content").load("content/#{loc}.html")
+    $(".active-nav").removeClass("active-nav")
+    $(".navlink[ajax=#{loc}]").addClass("active-nav")
   $(".navlink").click ->
     $('#sidenav-overlay').trigger('click')
+    return if $(this).hasClass("active-nav")
     clicked = $(this)
     $(".active-nav").removeClass("active-nav")
     clicked.addClass("active-nav")
