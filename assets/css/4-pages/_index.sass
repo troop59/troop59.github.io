@@ -1,6 +1,7 @@
 html
   font-size: 14pt
   height: 100%
+  overflow: visible
   +scrollbar(8px, fade_out($black, 0.5), fade_out($black, 1))
 
 body
@@ -8,6 +9,7 @@ body
   background: $black
   height: 100%
   overflow: visible
+  overflow-x: hidden
   +row(table)
 
 #sidenav
@@ -15,13 +17,17 @@ body
   z-index: 10
   background: $white
   position: fixed
+  top: 0
   +span-columns(2)
 
 #content
   height: 100%
   +span-columns(10)
-  overflow-y: scroll
+  //overflow-y: auto
+  overflow: visible
   overflow-x: hidden
+  position: absolute
+  right: 0
   background: rgba(255,255,255,0.5)
 
   &::before
@@ -31,8 +37,11 @@ body
     right: 0
     z-index: -1
     display: block
-    background-image: url(../img/background.png)
-    width: 100%
+    background:
+      image: url(../img/background.png)
+      //size: cover
+      position: center
+    //width: 100%
     height: 100%
     +filter(blur(5px))
 
