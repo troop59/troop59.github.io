@@ -23,8 +23,8 @@ $ ->
     document.title = "#{clicked.text()} | #{title}"
     document.title = title if clicked.attr("ajax") == "about"
     loadAjax = $.ajax("content/#{ clicked.attr("ajax") || "about" }.html")
-    cardCount = $("#content>.card").length
-    $("#content>.card").each (index)->
+    cardCount = $("#content>.card,#content>.cf>.card").length
+    $("#content>.card,#content>.cf>.card").each (index)->
       card = $(this)
       card.css("z-index", 50+cardCount-index)
       setTimeout( ->
@@ -35,8 +35,8 @@ $ ->
             if cardCount==0
               loadAjax.done (data)->
                 $("#content").html(data)
-                cardCount = $("#content>.card").length
-                $("#content>.card").each (index_new)->
+                cardCount = $("#content>.card,#content>.cf>.card").length
+                $("#content>.card,#content>.cf>.card").each (index_new)->
                   $(this).hide()
                   card_new = $(this)
                   setTimeout( ->

@@ -39,3 +39,12 @@
 
   .no-scale
     font-size: 1rem
+
+  &.footer-card
+    @media #{$large-and-up}
+      float: none
+      +span-columns(4 of 10)
+      +block-center
+      display: table
+    .footer-name
+      text-align: center
