@@ -138,11 +138,11 @@
 		p_body = p_body + 'date:   '+ post_date() +' \n' ;
 		if($('#alt-blurb-chk').is(':checked'))
 		{
-			p_body = p_body + 'excerpt: ' + $('#alt-blurb').val();
+			p_body = p_body + 'excerpt: "' + $('#alt-blurb').val() + '"\n';
 		}
 		if($('#center-card').is(':checked'))
 		{
-			p_body = p_body + 'center: true'
+			p_body = p_body + 'center: true\n';
 		}
 		/* Setting the category here is not the most elegant way...
 		p_body = p_body + 'categories: tests \n';
