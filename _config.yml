@@ -11,3 +11,7 @@ sass:
 
 gems:
  - jekyll-coffeescript
+
+github:
+  repo: girlup/girlup.github.io
+  branch: master
