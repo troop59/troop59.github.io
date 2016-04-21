@@ -33,6 +33,17 @@
 		<div class="form-group">
 			<textarea class="form-control" rows="10" id="p_body" placeholder="Type your post here." name="body"></textarea>
 		</div>
+		<div class="form-group">
+			<input type='checkbox' id='alt-blurb-chk'>
+			<label for='alt-blurb-chk'>Use an alternate blurb</label>
+		</div>
+		<div class="form-group">
+			<textarea id="alt-blurb" class="form-control" placeholder="Alternate blurb" name="alt-blurb"></textarea>
+		</div>
+		<div class="form-group">
+			<input type="checkbox" id='center-card'>
+			<label for="center-card">Center preview card</label>
+		</div>
 		<div class="form-inline">
 			<div class="form-group">
 				<label for="username" class="sr-only">Username</label>
@@ -125,6 +136,14 @@
 		p_body = p_body + 'layout: post \n' ;
 		p_body = p_body + 'title:  "' + title +'" \n';
 		p_body = p_body + 'date:   '+ post_date() +' \n' ;
+		if($('#alt-blurb-chk').is(':checked'))
+		{
+			p_body = p_body + 'excerpt: ' + $('#alt-blurb').val();
+		}
+		if($('#center-card').is(':checked'))
+		{
+			p_body = p_body + 'center: true'
+		}
 		/* Setting the category here is not the most elegant way...
 		p_body = p_body + 'categories: tests \n';
 		*/
