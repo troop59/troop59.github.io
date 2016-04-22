@@ -204,7 +204,20 @@
 	</script>
 	<script>
     $(document).ready(function() {
-        $('#p_body').summernote();
+        $('#p_body').summernote({
+						placeholder: 'Post body',
+						toolbar: [
+							['dropdown', ['style']],
+					    ['style', ['bold', 'italic', 'underline', 'clear']],
+					    ['font', ['strikethrough', 'superscript', 'subscript']],
+					    ['fonttype', ['fontname', 'fontsize', 'color']],
+							['media', ['link', 'picture', 'video']],
+							['table', ['table']],
+							['hr', ['hr']],
+					    ['para', ['ul', 'ol', 'paragraph']],
+					    ['misc', ['fullscreen', 'undo', 'redo', 'help']]
+					  ]
+				});
     });
   </script>
 </body>
