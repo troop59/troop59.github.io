@@ -13,7 +13,7 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link href="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.1/summernote.css" rel="stylesheet">
   <script src="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.1/summernote.js"></script>
-
+	<script src="http://yamltojson.com/js/yaml.js"></script>
 </head>
 
 <body>
@@ -85,6 +85,53 @@
 	</div>
 
 	<script>
+
+	var API_GET_POST = 'https://raw.githubusercontent.com/{{ site.github.repo }}/{{ site.github.branch }}/_posts/';
+	var API_SHA_POST = 'https://api.github.com/repos/{{site.github.repo}}/contents/_posts/';
+	function path_to_file(path) {
+		return path.replace(/\//g, ' ').trim().replace(/ /g, '-') + '.md';
+	}
+
+	$(function(){
+		if(window.location.hash.length>1)
+		{
+			window.file_path = path_to_file(window.location.hash.substring(1));
+			$.getJSON(API_SHA_POST+window.file_path).done(function(data){
+				window.sha = data.sha;
+			});
+			$.ajax({
+				dataType: "text",
+				url: API_GET_POST+window.file_path,
+				type: "GET",
+				success: function(data) {
+					var front_matter = YAML.parse(data.split('---')[1]);
+					var content = data.split('---').slice(2).join('---').substring(1);
+					window.postdate = front_matter.date.toISOString();
+					$('#p_title').val(front_matter.title);
+					$('#p_body').summernote('code', content);
+					if(typeof front_matter.excerpt !== 'undefined')
+					{
+						$('#alt-blurb-chk').prop('checked', true);
+						$('#alt-blurb').val(front_matter.excerpt);
+					}
+					if(typeof front_matter.center !== 'undefined')
+					{
+						$('#center-card').prop('checked', true);
+					}
+				},
+				error: function(request, status, error) {
+					responseText = jQuery.parseJSON( request.responseText );
+					$('#messages').append($('<div class="alert alert-danger alert-dismissible" role="alert">')
+					.append('<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>')
+					.append('<strong>' + request.status + '</strong>: ' + responseText.message )
+					.append('<br>If you are using two-factor authentication, you will have to create ')
+					.append('<a href="https://github.com/settings/tokens">a personal access token</a> with "repo" permissions and use this instead of your password.')
+					.append('</div>'));
+				},
+			});
+		}
+	});
+
 	function get_query(){
 		// Source: http://fellowtuts.com/jquery/getting-query-string-values-in-javascript/
 		var url = document.location.href;
@@ -103,6 +150,10 @@
 	}
 
 	function post_file(title) {
+		if(typeof window.file_path !== 'undefined')
+		{
+			return window.file_path;
+		}
 		var d = new Date()
 		var dd = d.getDate()
 		if (dd < 10) dd = '0' + dd ;
@@ -120,11 +171,11 @@
 				filename = filename + '-' + d.getTime();
 			}
 		}
-		return filename
+		return filename + '.md'
 	}
 	function post_date() {
 		var d = new Date()
-		return d.toISOString()
+		return window.postdate || d.toISOString()
 	}
 
 	var API_NEW_POST = 'https://api.github.com/repos/{{ site.github.repo }}/contents/_posts/' ;
@@ -153,33 +204,67 @@
 		p_body = p_body + '\n' + $('#p_body').val();
 
 		var posted_ok = false;
-		$.ajax({
-			dataType: "json",
-			contentType: 'application/json; charset=UTF-8',
-			url: API_NEW_POST+post_file(title)+'.md',
-			type: "PUT",
-			data: JSON.stringify({
-				content: btoa(unescape(encodeURIComponent(p_body))),
-				message: 'posted via web',
-				branch: '{{ site.github.branch }}'
-			}),
-			beforeSend: function(xhr) {
-				xhr.setRequestHeader("Authorization", "Basic " + btoa(user+":"+password));
-			},
-			success: function(data) {
-				posted_ok = true ;
-				$('#container1').html('<h2>Successfully posted to {{ site.title }}</h2') ;
-			},
-			error: function(request, status, error) {
-				responseText = jQuery.parseJSON( request.responseText );
-				$('#messages').append($('<div class="alert alert-danger alert-dismissible" role="alert">')
-				.append('<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>')
-				.append('<strong>' + request.status + '</strong>: ' + responseText.message )
-				.append('<br>If you are using two-factor authentication, you will have to create ')
-				.append('<a href="https://github.com/settings/tokens">a personal access token</a> with "repo" permissions and use this instead of your password.')
-				.append('</div>'));
-			},
-		});
+		if(title.length>0)
+		{
+			$.ajax({
+				dataType: "json",
+				contentType: 'application/json; charset=UTF-8',
+				url: API_NEW_POST+post_file(title),
+				type: "PUT",
+				data: JSON.stringify({
+					content: btoa(unescape(encodeURIComponent(p_body))),
+					message: 'Post ' + title + ' via web',
+					branch: '{{ site.github.branch }}',
+					sha: window.sha || ''
+				}),
+				beforeSend: function(xhr) {
+					xhr.setRequestHeader("Authorization", "Basic " + btoa(user+":"+password));
+				},
+				success: function(data) {
+					posted_ok = true ;
+					$('#container1').html('<h2>Successfully posted to {{ site.title }}</h2') ;
+				},
+				error: function(request, status, error) {
+					responseText = jQuery.parseJSON( request.responseText );
+					$('#messages').append($('<div class="alert alert-danger alert-dismissible" role="alert">')
+					.append('<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>')
+					.append('<strong>' + request.status + '</strong>: ' + responseText.message )
+					.append('<br>If you are using two-factor authentication, you will have to create ')
+					.append('<a href="https://github.com/settings/tokens">a personal access token</a> with "repo" permissions and use this instead of your password.')
+					.append('</div>'));
+				},
+			});
+		}
+		else
+		{
+			$.ajax({
+				dataType: "json",
+				contentType: 'application/json; charset=UTF-8',
+				url: API_NEW_POST+post_file(title),
+				type: "DELETE",
+				data: JSON.stringify({
+					message: 'Delete ' + title + ' via web',
+					branch: '{{ site.github.branch }}',
+					sha: window.sha
+				}),
+				beforeSend: function(xhr) {
+					xhr.setRequestHeader("Authorization", "Basic " + btoa(user+":"+password));
+				},
+				success: function(data) {
+					posted_ok = true ;
+					$('#container1').html('<h2>Successfully posted to {{ site.title }}</h2') ;
+				},
+				error: function(request, status, error) {
+					responseText = jQuery.parseJSON( request.responseText );
+					$('#messages').append($('<div class="alert alert-danger alert-dismissible" role="alert">')
+					.append('<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>')
+					.append('<strong>' + request.status + '</strong>: ' + responseText.message )
+					.append('<br>If you are using two-factor authentication, you will have to create ')
+					.append('<a href="https://github.com/settings/tokens">a personal access token</a> with "repo" permissions and use this instead of your password.')
+					.append('</div>'));
+				},
+			});
+		}
 	});
 
 	query_params = get_query();
