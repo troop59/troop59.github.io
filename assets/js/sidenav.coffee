@@ -44,8 +44,8 @@ $ ->
 
   registerClick = ()->
     $("#go-back").click ->
-      window.history.back()
-    $("#home").click ->
+      window.history.back() unless $(this).hasClass('home')
+    $("#home, .home").click ->
       unless window.location.hash.substring(1)==''
         window.history.pushState({}, '', '/')
         loadAjax = $.ajax('list')
@@ -62,10 +62,10 @@ $ ->
     loc = window.location.hash.substring(1)
     $("#content").load(loc, complete = ->
       $(document).initContent()
+      $("#go-back").addClass("home")
       registerClick()
       document.title = "#{$(".card:first").attr('title')} | #{title}"
       document.title = title if window.location.hash == ""
-      $("#go-back").attr("id", "home")
     )
   else
     registerClick()
