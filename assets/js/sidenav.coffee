@@ -11,15 +11,15 @@ $ ->
       document.title = title if window.location.hash == ""
       cardCount = $("#content>.card,#content>.cf>.card").length
       $("#content>.card,#content>.cf>.card").each (index_new)->
-        $(this).hide()
         card_new = $(this)
+        $(this).hide()
         setTimeout( ->
-          card_new.show("slide", direction: "left", 500)
+          card_new.show("slide", direction: "left", 350)
           cardCount--
           if cardCount==0
             $(document).initContent()
             registerClick()
-        , 250*index_new)
+        , 150*index_new)
 
   slideOut = (h, loadAjax)->
     cardCount = $("#content>.card,#content>.cf>.card").length
