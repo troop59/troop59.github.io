@@ -1,5 +1,6 @@
 ---
 ---
+<!DOCTYPE html>
 <html>
 
 <head>
@@ -10,7 +11,8 @@
 	<script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-
+	<link href="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.1/summernote.css" rel="stylesheet">
+  <script src="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.1/summernote.js"></script>
 
 </head>
 
@@ -200,4 +202,9 @@
 		$('#p_body').val(src_body) ;
 	}
 	</script>
+	<script>
+    $(document).ready(function() {
+        $('#p_body').summernote();
+    });
+  </script>
 </body>
