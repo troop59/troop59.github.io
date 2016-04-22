@@ -32,14 +32,28 @@
     width: 60%
     +block-center
 
-  p
+  p#blurb
     width: 80%
     +block-center
+    flex-grow: 1
+    flex-shrink: 1
+    overflow-y: auto
+    margin-bottom: .5em
+  #copyright
+    font-size: .75em
+    width: 100%
+    text-align: center
+    flex: none
+    padding-bottom: .25em
 
   ul
+    display: flex
+    flex-direction: column
     list-style-type: none
     margin: 0 auto
     padding: 0
+    >*
+      flex: none
     &#nav
       position: absolute
       top: 0
@@ -52,8 +66,17 @@
             box-shadow: none
         &:hover
           box-shadow: 0px 0px 0px .1em $white, 0px 0px 0px .2em $silver
-    &#slide-out li a.active-nav
-      font-weight: bolder
+    &#slide-out
+      @media #{$small-and-down}
+        .faceimg
+          margin:
+            top: 14px
+            left: 54px
+            right: 54px
+            bottom: 7px
+      li a.active-nav
+        font-weight: bolder
+
     li
       a
         margin-bottom: .5em
@@ -77,11 +100,3 @@
 
 .side-nav
   height: 100%
-
-#copyright
-  font-size: .75em
-  position: absolute
-  width: 100%
-  bottom: 0
-  text-align: center
-  padding-bottom: .25em
