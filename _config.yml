@@ -23,3 +23,5 @@ defaults:
       type: "posts" # previously `post` in Jekyll 2.2.
     values:
       layout: "post"
+      
+excerpt_separator: "</p>"

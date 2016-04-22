@@ -8,5 +8,8 @@
       </span>
       {{ post.excerpt }}
     </div>
+    <div class="post-date">
+      {{ post.date | date_to_string }}
+    </div>
   </div>
 {% endfor %}
