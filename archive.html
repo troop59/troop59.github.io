@@ -1,0 +1,25 @@
+---
+---
+
+<div class="card archive-card" title="All Posts">
+  <div class="card-content">
+    <div class="card-title">
+      All Posts
+    </div>
+    <table class="striped">
+      {% for post in site.posts %}
+        <tr><td>
+          <a class="waves-effect btn-flat navlink archive-post" ajax="{{ post.url }}">
+            {{ post.title }}
+            <span>
+              {{ post.date | date_to_string }}
+            </span>
+          </a>
+      </td></tr>
+      {% endfor %}
+  </table>
+  </div>
+  <a href="#!" class="navlink" ajax="/list" id="go-back">
+    {% include back.svg %}
+  </a>
+</div>
