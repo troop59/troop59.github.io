@@ -8,14 +8,16 @@
     </div>
     <table class="striped">
       {% for post in site.posts %}
-        <tr><td>
-          <a class="waves-effect btn-flat navlink archive-post" ajax="{{ post.url }}">
-            {{ post.title }}
-            <span>
+        <tr>
+            <td>
+              <a class="waves-effect btn-flat navlink archive-post" ajax="{{ post.url }}">
+                {{ post.title }}
+              </a>
+            </td>
+            <td>
               {{ post.date | date_to_string }}
-            </span>
-          </a>
-      </td></tr>
+            </td>
+      </tr>
       {% endfor %}
   </table>
   </div>

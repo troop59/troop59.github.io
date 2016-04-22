@@ -51,6 +51,16 @@ body
   margin: 1em
   z-index: 2000
   background: darken(gray, 30%)
+  @media #{$small-and-down}
+    margin: .5em
+    width: 36px
+    height: 36px
+    i
+      position: absolute
+      top: 4px
+      left: 0
+      line-height: 28px
+      font-size: 28px
 
 .cf
   +clearfix
