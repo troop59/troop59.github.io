@@ -1,2 +1,12 @@
-{{ content }}
-{% include comments.html %}
+<div class="card post-card" title="{{ page.title }}">
+  <div class="card-content">
+    <div class="card-title">
+      {{ page.title }}
+    </div>
+    {{ content }}
+    {% include comments.html %}
+  </div>
+  <a href="#!" class="navlink" ajax="/list" id="go-back">
+    {% include back.svg %}
+  </a>
+</div>

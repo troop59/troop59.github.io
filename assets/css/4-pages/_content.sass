@@ -83,3 +83,30 @@
     top: 1em
     font-size: .85em
     color: gray
+  &#archive-link
+    height: auto
+
+  &.post-card
+    +span-columns(9 of 10)
+    position: absolute
+    top: 0
+    bottom: 0
+    height: auto
+    overflow-y: auto
+    .card-title
+      text-align: center
+      &::after
+        display: none
+
+  #go-back
+    position: absolute
+    top: .25em
+    left: .25em
+    svg
+      +size(2em)
+      fill: black
+
+  &.archive-card
+    @extend .card.post-card
+    +span-columns(7 of 10)
+    +shift(1.5)
