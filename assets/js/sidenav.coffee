@@ -65,6 +65,7 @@ $ ->
       registerClick()
       document.title = "#{$(".card:first").attr('title')} | #{title}"
       document.title = title if window.location.hash == ""
+      $("#go-back").attr("id", "home")
     )
   else
     registerClick()
