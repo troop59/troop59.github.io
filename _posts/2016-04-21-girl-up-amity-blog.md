@@ -1,7 +1,7 @@
 ---
 layout: post
 title:  "Girl Up Amity blog"
-date:   2016-04-22T00:43:05.297Z
+date:   2016-04-21T20:43:05.297Z
 center: true
 ---
 
