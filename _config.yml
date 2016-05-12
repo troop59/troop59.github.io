@@ -13,7 +13,7 @@ gems:
  - jekyll-coffeescript
 
 github:
-  repo: girlup/girlup.github.io
+  repo: troop59/troop59.github.io
   branch: master
 
 defaults:
